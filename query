@@ -1,0 +1,12 @@
+/* Write your T-SQL query statement below */
+with requestacceptcte as (
+    select requester_id as id, count(*) as num from requestaccepted
+    group by requester_id
+    union all
+    select accepter_id as id, count(*) as num from requestaccepted
+    group by accepter_id
+)
+
+select top 1 id,sum(num) as num from requestacceptcte
+group by id
+order by sum(num) desc
